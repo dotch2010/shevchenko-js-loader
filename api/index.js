@@ -1,4 +1,4 @@
-const { inflect } = require("shevchenko");
+const shevchenko = require('shevchenko');
 
 export default async function handler(req, res) {
   // Перевірка на метод запиту
@@ -14,12 +14,18 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Виконання відмінювання
-    const result = inflect(name, caseName);
+    // Логування для перевірки, що бібліотека правильно імпортована
+    console.log(shevchenko);
+
+    // Виконання відмінювання через об'єкт shevchenko
+    const result = shevchenko.inflect(name, caseName);
 
     if (!result) {
       return res.status(400).json({ error: `Unable to inflect name: ${name} for case: ${caseName}` });
     }
+
+    // Логування результату для перевірки
+    console.log("Inflection result:", result);
 
     // Відправка результату
     return res.json({ result });
