@@ -1,46 +1,36 @@
 const shevchenko = require('shevchenko');
 
-async function processNames() {
+async function processNames(req, res) {
   try {
+    // Перевірка параметрів запиту
+    const { givenName, patronymicName, familyName } = req.query;
+
+    if (!givenName || !patronymicName || !familyName) {
+      return res.status(400).json({ error: "Missing parameters. Please provide givenName, patronymicName, and familyName." });
+    }
+
     // Використовуємо await в асинхронній функції
     const gender_main = await shevchenko.detectGender({
-      givenName: 'Тарас',
-      patronymicName: 'Григорович',
-      familyName: 'Шевченко',
+      givenName,
+      patronymicName,
+      familyName,
     });
 
     // Використовуємо gender_main для відмінювання
     const anthroponym = await shevchenko.inVocative({
       gender: gender_main,
-      givenName: 'Тарас',
-      patronymicName: 'Григорович',
-      familyName: 'Шевченко',
+      givenName,
+      patronymicName,
+      familyName,
     });
 
-    // Логування результатів для перевірки
-    console.log('Detected Gender:', gender_main);
-    console.log('Anthroponym in Vocative Case:', anthroponym);
+    // Відправка результату
+    res.json({ anthroponym });
   } catch (error) {
     console.error('Error:', error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
-// Викликаємо функцію для виконання асинхронних операцій
-processNames();
-
-/*
-async function main() {
-  const input = {
-    gender: 'masculine',
-    givenName: 'Роман',
-    patronymicName: 'Андрій',
-    familyName: 'Михайлович'
-  };
-
-  const output = await shevchenko.inVocative(input);
-
-  console.log(output); // { givenName: "Тарасе", patronymicName: "Григоровичу", familyName: "Шевченку" }
-}
-
-main().catch((error) => console.error(error));
-*/
+// Експортуємо функцію обробника
+module.exports = processNames;
