@@ -1,16 +1,22 @@
 const shevchenko = require('shevchenko');
 
 async function main() {
-  const input = {
-    gender: 'masculine',
-    givenName: 'Тарас',
-    patronymicName: 'Григорович',
-    familyName: 'Шевченко'
+  const anthroponym = {
+    givenName: 'Лариса',
+    patronymicName: 'Петрівна',
+    familyName: 'Косач-Квітка'
   };
+
+  const gender = await shevchenko.detectGender(anthroponym); // "feminine"
+  if (gender == null) {
+    throw new Error('Failed to detect grammatical gender.');
+  }
+
+  const input = { ...anthroponym, gender };
 
   const output = await shevchenko.inVocative(input);
 
-  console.log(output); // { givenName: "Тарасе", patronymicName: "Григоровичу", familyName: "Шевченку" }
+  console.log(output); // { givenName: "Ларисо", patronymicName: "Петрівно", familyName: "Косач-Квітко" }
 }
 
 main().catch((error) => console.error(error));
