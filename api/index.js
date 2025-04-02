@@ -2,14 +2,15 @@ const shevchenko = require('shevchenko');
 
 async function main() {
   const input = {
-    givenName: 'Тарас',
-    patronymicName: 'Григорович',
-    familyName: 'Шевченко'
+    gender: 'masculine',
+    givenName: 'Роман',
+    patronymicName: 'Андрій',
+    familyName: 'Михайлович'
   };
 
   const output = await shevchenko.inVocative(input);
 
-  console.log(output);
+  console.log(output); // { givenName: "Тарасе", patronymicName: "Григоровичу", familyName: "Шевченку" }
 }
 
 main().catch((error) => console.error(error));
