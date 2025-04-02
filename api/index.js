@@ -2,9 +2,9 @@ const shevchenko = require('shevchenko');
 
 async function main() {
   const anthroponym = {
-    givenName: 'Лариса',
-    patronymicName: 'Петрівна',
-    familyName: 'Косач-Квітка'
+    givenName: 'Сай',
+    patronymicName: 'Вікторія',
+    familyName: 'Євгенівна'
   };
 
   const gender = await shevchenko.detectGender(anthroponym); // "feminine"
