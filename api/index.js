@@ -1,26 +1,35 @@
-import { inflect } from "shevchenko";
-
-export default function handler(req, res) {
-  // Перевірка методів запиту
+export default async function handler(req, res) {
+  // Перевірка на метод запиту
   if (req.method !== 'GET') {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
 
-  // Отримання параметрів
   const { name, caseName } = req.query;
 
-  // Перевірка на наявність параметрів
+  // Перевірка на відсутність параметрів
   if (!name || !caseName) {
-    return res.status(400).json({ error: "Missing parameters: 'name' and 'caseName' are required" });
+    return res.status(400).json({ error: "Both 'name' and 'caseName' are required parameters." });
   }
 
   try {
+    // Завантаження бібліотеки Shevchenko через CDN
+    const script = await fetch("https://unpkg.com/shevchenko@3.1.4/dist/cjs/shevchenko.js");
+    const shevchenkoScript = await script.text();
+
+    // Створення функції для використання бібліотеки
+    eval(shevchenkoScript); // Це завантажує код бібліотеки в поточний контекст
+
     // Виконання відмінювання
     const result = inflect(name, caseName);
+
+    if (!result) {
+      return res.status(400).json({ error: `Unable to inflect name: ${name} for case: ${caseName}` });
+    }
+
+    // Відправка результату
     return res.json({ result });
   } catch (error) {
-    // Обробка помилок
-    console.error("Error during inflection:", error);
-    return res.status(500).json({ error: "Internal Server Error: Failed to process inflection" });
+    console.error('Error in function execution:', error);
+    return res.status(500).json({ error: "Internal Server Error: Unable to process the inflection." });
   }
 }
