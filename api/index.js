@@ -1,3 +1,5 @@
+const { inflect } = require("shevchenko");
+
 export default async function handler(req, res) {
   // Перевірка на метод запиту
   if (req.method !== 'GET') {
@@ -12,24 +14,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Завантаження бібліотеки Shevchenko через CDN
-    const script = await fetch("https://unpkg.com/shevchenko@3.1.4/dist/cjs/shevchenko.js");
-    const shevchenkoScript = await script.text();
-
-    // Логування для перевірки завантаження скрипта
-    console.log("Shevchenko script loaded successfully!");
-
-    // Створення функції для використання бібліотеки
-    eval(shevchenkoScript); // Це завантажує код бібліотеки в поточний контекст
-
-    // Логування параметрів
-    console.log(`Inflecting name: ${name}, case: ${caseName}`);
-
     // Виконання відмінювання
     const result = inflect(name, caseName);
-
-    // Логування результату
-    console.log("Result of inflection:", result);
 
     if (!result) {
       return res.status(400).json({ error: `Unable to inflect name: ${name} for case: ${caseName}` });
