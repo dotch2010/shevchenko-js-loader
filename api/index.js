@@ -1,6 +1,8 @@
 const shevchenko = require('shevchenko');
 const { militaryExtension } = require('shevchenko-ext-military');
 
+shevchenko.registerExtension(militaryExtension);
+
 async function processNames(req, res) {
   try {
     // Отримуємо параметри запиту
