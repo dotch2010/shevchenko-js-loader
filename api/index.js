@@ -30,7 +30,7 @@ async function processNames(req, res) {
     });
 
     // Відправляємо відповідь
-    res.json({{ 'inDative': anthroponym, 'gender': gender_main }});
+    res.json({ 'inDative': anthroponym, 'gender': gender_main });
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: "Internal Server Error" });
