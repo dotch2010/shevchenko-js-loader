@@ -22,7 +22,14 @@ async function processNames(req, res) {
     }
 
     // Відмінюємо ПІБ у кличному відмінку
-    const anthroponym = await shevchenko.inDative({
+    const inDative = await shevchenko.inDative({
+      gender: gender_main,
+      givenName,
+      patronymicName,
+      familyName,
+    });
+
+    const inAccusative = await shevchenko.inAccusative({
       gender: gender_main,
       givenName,
       patronymicName,
@@ -30,7 +37,7 @@ async function processNames(req, res) {
     });
 
     // Відправляємо відповідь
-    res.json({ 'inDative': anthroponym, 'gender': gender_main });
+    res.json({ 'dative': inDative, 'accusative': inAccusative, 'gender': gender_main });
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: "Internal Server Error" });
