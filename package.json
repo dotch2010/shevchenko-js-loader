@@ -4,5 +4,6 @@
   "main": "index.js",
   "dependencies": {
     "shevchenko": "^3.1.4"
+    "shevchenko-ext-military": "^1.0.0"
   }
 }
