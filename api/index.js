@@ -1,4 +1,5 @@
 const shevchenko = require('shevchenko');
+const { militaryExtension } = require('shevchenko-ext-military');
 
 async function processNames(req, res) {
   try {
