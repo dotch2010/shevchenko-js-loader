@@ -2,21 +2,26 @@ const shevchenko = require('shevchenko');
 
 async function processNames(req, res) {
   try {
-    // Перевірка параметрів запиту
+    // Отримуємо параметри запиту
     const { givenName, patronymicName, familyName } = req.query;
 
     if (!givenName || !patronymicName || !familyName) {
       return res.status(400).json({ error: "Missing parameters. Please provide givenName, patronymicName, and familyName." });
     }
 
-    // Використовуємо await в асинхронній функції
-    const gender_main = await shevchenko.detectGender({
+    // Автоматично визначаємо стать
+    let gender_main = await shevchenko.detectGender({
       givenName,
       patronymicName,
       familyName,
     });
 
-    // Використовуємо gender_main для відмінювання
+    // Якщо стать не визначена, ставимо "masculine" за замовчуванням
+    if (gender_main !== "masculine" && gender_main !== "feminine") {
+      gender_main = "masculine"; // або "feminine" залежно від твоїх уподобань
+    }
+
+    // Відмінюємо ПІБ у кличному відмінку
     const anthroponym = await shevchenko.inVocative({
       gender: gender_main,
       givenName,
@@ -24,7 +29,7 @@ async function processNames(req, res) {
       familyName,
     });
 
-    // Відправка результату
+    // Відправляємо відповідь
     res.json({ anthroponym });
   } catch (error) {
     console.error('Error:', error);
@@ -32,5 +37,5 @@ async function processNames(req, res) {
   }
 }
 
-// Експортуємо функцію обробника
+// Експортуємо функцію для Vercel
 module.exports = processNames;
