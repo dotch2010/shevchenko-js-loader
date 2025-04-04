@@ -22,7 +22,7 @@ async function processNames(req, res) {
     }
 
     // Відмінюємо ПІБ у кличному відмінку
-    const anthroponym = await shevchenko.inVocative({
+    const anthroponym = await shevchenko.inDative({
       gender: gender_main,
       givenName,
       patronymicName,
