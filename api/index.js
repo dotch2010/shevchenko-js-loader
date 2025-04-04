@@ -15,9 +15,7 @@ async function processNames(req, res) {
       patronymicName,
       familyName,
     });
-
-    let gender_main2 = gender_main;
-
+    
     // Якщо стать не визначена, ставимо "masculine" за замовчуванням
     if (gender_main !== "masculine" && gender_main !== "feminine") {
       gender_main = "masculine"; // або "feminine" залежно від твоїх уподобань
@@ -32,7 +30,7 @@ async function processNames(req, res) {
     });
 
     // Відправляємо відповідь
-    res.json({ anthroponym, 'gender_main': gender_main, 'gender_main2': gender_main2 });
+    res.json({{ 'inDative': anthroponym, 'gender': gender_main }});
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: "Internal Server Error" });
