@@ -24,6 +24,8 @@ async function processNames(req, res) {
     // Відмінюємо ПІБ у кличному відмінку
     const inDative = await shevchenko.inDative({
       gender: gender_main,
+      militaryAppointment: 'номер обслуги',
+      militaryRank: 'молодший сержант',
       givenName,
       patronymicName,
       familyName,
@@ -31,6 +33,8 @@ async function processNames(req, res) {
 
     const inAccusative = await shevchenko.inAccusative({
       gender: gender_main,
+      militaryAppointment: 'командир гармати',
+      militaryRank: 'солдат',
       givenName,
       patronymicName,
       familyName,
