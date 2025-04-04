@@ -6,7 +6,7 @@ shevchenko.registerExtension(militaryExtension);
 async function processNames(req, res) {
   try {
     // Отримуємо параметри запиту
-    const { givenName, patronymicName, familyName } = req.query;
+    const { givenName, patronymicName, familyName, milAppointment, milRank } = req.query;
 
     if (!givenName || !patronymicName || !familyName) {
       return res.status(400).json({ error: "Missing parameters. Please provide givenName, patronymicName, and familyName." });
@@ -27,8 +27,8 @@ async function processNames(req, res) {
     // Відмінюємо ПІБ у кличному відмінку
     const inDative = await shevchenko.inDative({
       gender: gender_main,
-      militaryAppointment: 'номер обслуги',
-      militaryRank: 'молодший сержант',
+      militaryAppointment: milAppointment,
+      militaryRank: milRank,
       familyName: familyName,
       givenName: givenName,
       patronymicName: patronymicName
@@ -36,8 +36,8 @@ async function processNames(req, res) {
 
     const inAccusative = await shevchenko.inAccusative({
       gender: gender_main,
-      militaryAppointment: 'номер обслуги',
-      militaryRank: 'молодший сержант',
+      militaryAppointment: milAppointment,
+      militaryRank: milRank,
       familyName: familyName,
       givenName: givenName,
       patronymicName: patronymicName
