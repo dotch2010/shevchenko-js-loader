@@ -26,18 +26,18 @@ async function processNames(req, res) {
       gender: gender_main,
       militaryAppointment: 'номер обслуги',
       militaryRank: 'молодший сержант',
-      givenName,
-      patronymicName,
-      familyName,
+      familyName: familyName,
+      givenName: givenName,
+      patronymicName: patronymicName
     });
 
     const inAccusative = await shevchenko.inAccusative({
       gender: gender_main,
-      militaryAppointment: 'командир гармати',
-      militaryRank: 'солдат',
-      givenName,
-      patronymicName,
-      familyName,
+      militaryAppointment: 'номер обслуги',
+      militaryRank: 'молодший сержант',
+      familyName: familyName,
+      givenName: givenName,
+      patronymicName: patronymicName
     });
 
     // Відправляємо відповідь
